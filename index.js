@@ -90,10 +90,12 @@ app.get('/user',
 );
 
 app.get('/logout',
-    (req, res) => {
-        req.logout(),
-        res.sendFile('html/logout.html',
-        { root: __dirname })
+    (req, res, next) => {
+        req.logout(function(err) {
+            if (err) { return next(err); }
+            res.sendFile('html/logout.html',
+            { root: __dirname });
+        })
 });
 
 /* REGISTER SOME USERS */
